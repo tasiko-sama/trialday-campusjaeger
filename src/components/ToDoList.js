@@ -12,15 +12,6 @@ export class ToDoList extends Component {
         this.state = {
             title: this.props.lists['title'],
             itemList: this.props.lists['itemList']
-            // title: 'Groceries',
-            // itemList: {
-            //     'Cras justo odio': false,
-            //     'Dapibus ac facilisis in': false,
-            //     'Morbi leo risus': false,
-            //     'Porta ac conectetur': false,
-            //     'Vestibilum at eros': false
-            // }
-
         }
 
         this.onEnterNew = this.onEnterNew.bind(this);
@@ -37,22 +28,24 @@ export class ToDoList extends Component {
     onEnterNew(e) {
         if (e.key === 'Enter') {
             e.preventDefault();
-            let lists = this.state.itemList;
+            let lists = this.props.lists['itemList'];
             let newTaskName = document.getElementById('newTask').value;
             if (newTaskName && newTaskName.length >= 1) {
                 lists[newTaskName] = false;
-                this.setState({ itemList: lists });
+                this.setState({ lists: lists });
+                document.getElementById('newTask').value = '';
             }
         }
 
     }
 
     render() {
-        let s = this.state;
         let p = this.props;
-        let fullTable = [];
+
         const itemList = p.lists['itemList'];
         const listTitle = p.lists['title'];
+
+        let fullTable = [];
 
         const genList = Object.keys(itemList).map((i, ind) =>
             <ListGroup.Item as='li' action disabled={itemList[i]} style={{ display: 'flex', justifyContent: 'center' }}>
@@ -90,29 +83,6 @@ export class ToDoList extends Component {
         return (
             <div>
                 {fullTable}
-                {/* <ListGroup as='ul'>
-                    <ListGroup.Item as='li' active key={0}>
-                        {title}
-                        <Button variant='danger'>Remove</Button>
-                    </ListGroup.Item>
-                    {genList}
-                    <ListGroup.Item variant='primary' key={Object.keys(itemList).length + 1}>
-                        <Form>
-                            <Form.Label>Add new task</Form.Label>
-                            <InputGroup>
-                                <InputGroup.Prepend>
-                                    <FormControl
-                                        id="newTask"
-                                        placeholder="Enter task name"
-                                        aria-label="Username"
-                                        aria-describedby="basic-addon1"
-                                        onKeyDown={this.onEnterNew}
-                                    />
-                                </InputGroup.Prepend>
-                            </InputGroup>
-                        </Form>
-                    </ListGroup.Item>
-                </ListGroup> */}
             </div>
         )
     }

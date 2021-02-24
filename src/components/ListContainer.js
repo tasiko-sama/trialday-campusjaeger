@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ToDoList } from '../components/ToDoList';
-import { Button, Badge } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 import './ListContainer.css';
 
@@ -43,13 +43,9 @@ export class ListContainer extends Component {
             ],
 
         };
-    }
 
-    // onEditList(incrementer) {
-    //     let { numOfLists } = this.state;
-    //     numOfLists = numOfLists + 1 * incrementer;
-    //     this.setState({ numOfLists: numOfLists });
-    // }
+        this.onAddList = this.onAddList.bind(this);
+    }
 
     onSwitchCols(col) {
         let { lists } = this.state;
@@ -66,7 +62,18 @@ export class ListContainer extends Component {
     }
 
     onAddList() {
-        
+        // hard-coded
+        let { lists } = this.state;
+        const newList = {
+            'title': 'Work',
+            'itemList': {
+                'Call Jen': false,
+                'Respond to team lead': false,
+                'Meeting at 4:30': false
+            }
+        };
+        lists.push(newList);
+        this.setState( { lists: lists } );
     }
 
     render() {
@@ -85,7 +92,6 @@ export class ListContainer extends Component {
                 <div className="container-lists">
                     {generatedLists}
                 </div>
-                {/* <Button style={{ height: '60px' }} onClick={() => this.onEditList(1)}>Add List</Button> */}
             </div>
         )
     }
